@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo $(basename -- $0)
+
+if [ -z "$ZSH_NAME" ] && [ "`basename -- $0`" = "bbb-init-build-env" ]; then
+	echo "Please source the script: 'source ./bbb-init-build-env'"
+	exit 1
+fi
+
+if [ -n "$BASH_SOURCE" ]; then
+	BBB_ROOT_DIR="`dirname -- $BASH_SOURCE`"
+elif [ -n "$ZSH_NAME" ]; then
+	BBB_ROOT_DIR="`dirname -- $0`"
+else
+	BBB_ROOT_DIR="."
+fi
+
+BBB_ROOT_DIR=`realpath -- $BBB_ROOT_DIR`
+
+
+. $BBB_ROOT_DIR/poky/oe-init-build-env
+
+# Copy in local.conf
+#cp $BBB_ROOT_DIR/local.conf ./conf/local.conf
+
+# Add in all extra layers
+BBB_LAYERS=""
+
+for bbblayer in $BBB_LAYERS; do
+	bitbake-layers add-layer --force $BBB_ROOT_DIR/$bbblayer
+done
+
+# Clean up temporary local variables
+unset BBB_ROOT_DIR
+unset BBB_LAYERS
+unset bbblayer
