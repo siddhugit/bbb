@@ -55,3 +55,15 @@ B (Build Directory, defaults to S)
 :append : This appends a value to a variable. The operator inserts no space between the current value and appended value. The effects are applied at variable expansion time rather than being immediately applied.
 :prepend : This appends a value to a variable. The operator inserts no space between the current value and appended value. The effects are applied at variable expansion time rather than being immediately applied.
 :remove : This remove values from lists. Specifying a value for removal causes all occurrences of that value to be removed from the variable.
+
+#Hello world recipe
+Add directory/file structure like this in an exisiting recipes directory (e.g. recipes-examples)
+    recipes-examples
+        helloworld
+            ├── files
+            │   └── helloworld.c
+            └── helloworld_0.1.bb
+Add this in local.conf ( "IMAGE_INSTALL +=" was not working for some reason)
+IMAGE_INSTALL:append = " helloworld"
+
+

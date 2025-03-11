@@ -27,6 +27,7 @@ BBB_ROOT_DIR=`realpath -- $BBB_ROOT_DIR`
 BBB_LAYERS="meta-mylayer"
 
 for bbblayer in $BBB_LAYERS; do
+	echo "adding $BBB_ROOT_DIR/$bbblayer"
 	bitbake-layers add-layer --force $BBB_ROOT_DIR/$bbblayer
 done
 
