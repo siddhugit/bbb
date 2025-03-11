@@ -20,11 +20,11 @@ BBB_ROOT_DIR=`realpath -- $BBB_ROOT_DIR`
 
 . $BBB_ROOT_DIR/poky/oe-init-build-env
 
-# Copy in local.conf
+# Copy your local.conf
 #cp $BBB_ROOT_DIR/local.conf ./conf/local.conf
 
-# Add in all extra layers
-BBB_LAYERS=""
+# Add your layers
+BBB_LAYERS="meta-mylayer"
 
 for bbblayer in $BBB_LAYERS; do
 	bitbake-layers add-layer --force $BBB_ROOT_DIR/$bbblayer
