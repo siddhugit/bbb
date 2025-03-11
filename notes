@@ -66,4 +66,5 @@ Add directory/file structure like this in an exisiting recipes directory (e.g. r
 Add this in local.conf ( "IMAGE_INSTALL +=" was not working for some reason)
 IMAGE_INSTALL:append = " helloworld"
 
+#Tasks
 

@@ -7,10 +7,10 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 SRC_URI="file://helloworld.c"
 
 do_compile(){
-    ${CC} ${CFLAGS} ${LDFLAGS} ${WORKDIR}/helloworld.c -o ${S}/helloworld1
+    ${CC} ${CFLAGS} ${LDFLAGS} ${WORKDIR}/helloworld.c -o ${S}/helloworld
 }
 
 do_install(){
     install -d ${D}/${bindir}
-    install -m 755 ${S}/helloworld1 ${D}/${bindir}/helloworld
+    install -m 755 ${S}/helloworld ${D}/${bindir}/helloworld
 }
