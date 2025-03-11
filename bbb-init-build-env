@@ -35,3 +35,11 @@ done
 unset BBB_ROOT_DIR
 unset BBB_LAYERS
 unset bbblayer
+
+bbbsetup(){
+	git submodule update --init --recursive
+}
+
+bbbld(){
+	bitbake core-image-full-cmdline
+}
