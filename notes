@@ -88,4 +88,27 @@ E.g. git format-patch HEAD~1
 (3) Edit your recipe
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:" (not sure about this)
 SRC_URI:append = " file://patchfile.patch "
+*****Use "devtool modify" to create a patch
+
+#Add user
+(1)Get encrypted password
+printf "%q" $(openssl passwd <password>)
+e.g. if password is "12345"
+printf "%q" $(openssl passwd 12345)
+(2) inherit useradd
+See newuser.bb for example
+
+#passwordless root
+EXTRA_IMAGE_FEATURES:append = " allow-root-login debug-tweaks"
+or
+EXTRA_IMAGE_FEATURES:append = " allow-root-login allow-empty-password empty-root-password"
+
+#Add packages not in current layers
+(1) Google "OpenEmbedded Layer Index" 
+https://layers.openembedded.org/layerindex/branch/master/layers/
+(2) On the website search in "Recipes" tab
+(3) get the repo url of the layer
+(4) clone the layer repo ( the correct branch e.g. kirkstone)
+(5) Add the layer and package (e.g. bitbake-layers add-layer and IMAGE_INSTALL)
+
 

@@ -24,7 +24,9 @@ BBB_ROOT_DIR=`realpath -- $BBB_ROOT_DIR`
 #cp $BBB_ROOT_DIR/local.conf ./conf/local.conf
 
 # Add your layers
-BBB_LAYERS="meta-mylayer meta-append-layer"
+BBB_LAYERS="meta-mylayer meta-append-layer \
+meta-openembedded/meta-oe \
+meta-openembedded/meta-python"
 
 for bbblayer in $BBB_LAYERS; do
 	echo "adding $BBB_ROOT_DIR/$bbblayer"
@@ -35,6 +37,8 @@ done
 unset BBB_ROOT_DIR
 unset BBB_LAYERS
 unset bbblayer
+
+echo "run bbbld or bitbake core-image-full-cmdline"
 
 bbbsetup(){
 	git submodule update --init --recursive

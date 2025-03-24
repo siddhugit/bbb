@@ -2,3 +2,7 @@
 	path = poky
 	url = http://git.yoctoproject.org/git/poky
 	branch = kirkstone
+[submodule "meta-openembedded"]
+	path = meta-openembedded
+	url = git://git.openembedded.org/meta-openembedded
+	branch = kirkstone
