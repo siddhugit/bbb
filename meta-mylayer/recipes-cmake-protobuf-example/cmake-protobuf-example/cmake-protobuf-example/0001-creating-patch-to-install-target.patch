@@ -1,0 +1,69 @@
+From 6b31fb0b391be4a786feec8acfc682307461bd18 Mon Sep 17 00:00:00 2001
+From: hsingsid <hsingsid@amazon.com>
+Date: Fri, 4 Apr 2025 10:14:42 -0400
+Subject: [PATCH] creating patch to install target
+
+---
+ CMakeLists.txt      | 17 ++++++++++++-----
+ main.cpp            |  6 +++++-
+ proto/message.proto |  3 ++-
+ 3 files changed, 19 insertions(+), 7 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 87fb5f8..ec96c20 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,6 +1,6 @@
+-PROJECT(rpc)
+-CMAKE_MINIMUM_REQUIRED (VERSION 3.0.0)
+-SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11")
++PROJECT(cmake-protobuf-example)
++CMAKE_MINIMUM_REQUIRED (VERSION 3.16)
++SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++17")
+ 
+ find_package(Protobuf REQUIRED)
+ 
+@@ -8,5 +8,12 @@ ADD_SUBDIRECTORY(proto)
+ 
+ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+ INCLUDE_DIRECTORIES(${Protobuf_INCLUDE_DIRS})
+-ADD_EXECUTABLE(main main.cpp)
+-TARGET_LINK_LIBRARIES(main proto ${Protobuf_LIBRARIES})
++ADD_EXECUTABLE(${PROJECT_NAME} main.cpp)
++TARGET_LINK_LIBRARIES(${PROJECT_NAME} proto ${Protobuf_LIBRARIES})
++
++# Install all executable targets
++install(TARGETS ${PROJECT_NAME}
++        BUNDLE DESTINATION .
++        RUNTIME DESTINATION bin
++        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++)
+diff --git a/main.cpp b/main.cpp
+index 07b708a..5d17b36 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -4,7 +4,11 @@
+ using namespace std;
+ int main(int argc, char const *argv[])
+ {
+-  message::Message m;
++  message::Message msg;
++  msg.set_url("sid_url");
++  msg.set_title("sid_title");
+   cout << "Hello Proto!" << endl;
++  cout << msg.url() << endl;
++  cout << msg.title() << endl;
+   return 0;
+ }
+diff --git a/proto/message.proto b/proto/message.proto
+index 9fa18a6..33bfc05 100644
+--- a/proto/message.proto
++++ b/proto/message.proto
+@@ -1,5 +1,6 @@
+ package message;
+ 
+ message Message {
+-    repeated int32 id = 1;
++    required string url = 1;
++    optional string title = 2;
+ }

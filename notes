@@ -112,3 +112,41 @@ https://layers.openembedded.org/layerindex/branch/master/layers/
 (5) Add the layer and package (e.g. bitbake-layers add-layer and IMAGE_INSTALL)
 
 
+
+#Add a cmake recipe using devtool
+(1) devtool add <new-recipe-name> <recipe-url> -V <version>
+e.g.
+devtool add cmake-protobuf-example https://github.com/shaochuan/cmake-protobuf-example.git -V 1.0.0
+'cd' to recipe directory inside 'workspace' directory
+(2) build
+devtool build <new-recipe-name>
+e.g.
+devtool build cmake-protobuf-example
+(3) Add recipe
+devtool finish <new-recipe-name> <path-to-layer>
+e.g.
+devtool finish cmake-protobuf-example ../../../../meta-mylayer
+
+#Create a patch devtool modify
+(1)run devtool modify
+devtool modify <recipe-name>
+e.g.
+devtool modify cmake-protobuf-example
+(delete workspace/sources folder if it complains)
+'cd' to the recipe direcotry in workspace/sources
+(2) modify the sources
+Modify source files in the recipe direcotry in workspace/sources
+(3) build
+devtool build <new-recipe-name>
+e.g.
+devtool build cmake-protobuf-example
+(4) Once satisfied with the changes
+git add and commit (no need to format-patch in this ccase)
+(5) update the Modified recipe 
+If you give path to another layer it will create bbappend
+otherwise it modifies the recipe bb file
+devtool finish <new-recipe-name> <path-to-layer>
+e.g. to modfy the recipe bb file
+devtool finish cmake-protobuf-example ../../../../meta-mylayer
+to create bbappend
+devtool finish cmake-protobuf-example ../../../../meta-append-layer
